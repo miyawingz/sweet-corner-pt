@@ -2,7 +2,7 @@ function GetAllProducts() {
     return {
         text: `select json_agg(productsSubQuery) as "products"
                 from (
-                select p."pid" as "id", p."caption", p."cost", p."name", 
+                select p."pid" as "id", p."caption", p."cost", p."name", 0 as "calories",
                     (select row_to_json(imagesSubQuery) as "thumbnail" 
                         from (
                                 select i."pid" as "id", i."altText", i."type", i."file", 'http://api.sc.lfzprototypes.com/images/thumbnails/' || i."file" as "url"
