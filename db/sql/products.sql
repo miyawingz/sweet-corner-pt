@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS "products";
       "name" text NOT NULL,
       "createdAt" timestamptz NOT NULL DEFAULT NOW(),
       "updatedAt" timestamptz NOT NULL DEFAULT NOW(),
-      "deletedAt" timestamptz DEFAULT NULL
+      "deletedAt" timestamptz DEFAULT NULL,
   );
 
   INSERT INTO "products" ("caption", "cost", "description", "id", "name", "createdAt", "updatedAt", "deletedAt", "createdById") VALUES

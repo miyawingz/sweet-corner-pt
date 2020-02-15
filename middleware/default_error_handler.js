@@ -15,8 +15,8 @@ module.exports = (err, req, res, next) => {
         })
     }
 
-    res.status(500).send({
+    res.status(err.status || 500).send({
         message: err.message,
-        status: 500
+        status: err.status || 500
     })
 }
