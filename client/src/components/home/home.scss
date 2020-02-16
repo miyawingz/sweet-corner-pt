@@ -1,0 +1,41 @@
+.home {
+    .content {
+
+        .main {
+
+            font-family: sans-serif, 'Times New Roman';
+            width: 70%;
+            display: table-cell;
+            padding: 2% 5%;
+            text-align: justify;
+
+            .subtitle {
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+        }
+
+        .side {
+            position: relative;
+            width: 30%;
+            display: table-cell;
+            background-image: url(../../assets/images/strips2.png);
+            background-repeat: repeat-y;
+            background-size: 100% auto;
+
+            img {
+                position: absolute;
+                top: 5%;
+                right: 12%;
+            }
+        }
+    }
+
+    .homeFooter {
+        font-family: allura, sans-serif;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding-bottom: 2%;
+    }
+
+}

@@ -1,0 +1,76 @@
+.cart {
+    font-family: sans-serif, 'Times New Roman';
+
+    table {
+        margin: 20px 20px 0px;
+        border-collapse: collapse;
+
+        tr {
+
+            .thumbnail,
+            .each,
+            .quantity {
+                width: 15%;
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .name,
+            .total {
+                width: 27.5%;
+            }
+
+            td {
+                box-sizing: border-box;
+                padding: 10px;
+            }
+        }
+
+        tbody {
+            tr {
+                border-bottom: 2px #754b23 solid;
+            }
+        }
+
+        thead,
+        .total,
+        tfoot {
+            font-weight: bold;
+        }
+
+        tfoot {
+            font-size: 2rem;
+
+            td {
+                padding: 40px 0;
+            }
+
+            td:first-child {
+                text-align: right;
+            }
+        }
+
+        i:hover {
+            cursor: pointer;
+        }
+    }
+
+
+    button {
+        color: white;
+        background-color: #e86b35;
+        font-weight: bold;
+        margin: 0px 20px 20px;
+        height: 60px;
+        font-size: 1.25rem;
+        border: none;
+    }
+
+    button:hover {
+        cursor: pointer;
+    }
+
+
+}

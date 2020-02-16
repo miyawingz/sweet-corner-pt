@@ -1,0 +1,88 @@
+.product-details {
+    margin: 50px 0px;
+    font-family: sans-serif, 'Times New Roman';
+
+    .image,
+    .content {
+        display: inline-block;
+        vertical-align: middle;
+        width: 50%;
+        box-sizing: border-box;
+    }
+
+    .image {
+        padding: 0px 20px;
+
+        img {
+            width: 90%;
+        }
+    }
+
+    .content {
+        padding: 50px;
+
+        .name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 16px 0px;
+        }
+
+        .caption {
+            font-family: allura, sans-serif;
+            font-size: 1.8rem;
+            margin: 16px 0px;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 16px 0px;
+        }
+
+        .cost {
+            text-align: right;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        .cart-quantity {
+            text-align: right;
+
+            button,
+            .quantity {
+                display: inline-block;
+                padding: 10px;
+                vertical-align: middle;
+                text-align: center;
+                font-weight: bold;
+                font-size: 2rem;
+                width:50px;
+                line-height:30px;
+                box-sizing: border-box;
+                margin-left: 10px;
+            }
+
+            .quantity{
+                width:70px;
+                background-color:lightgray;
+            }
+
+            button {
+                background-color: rgba(6, 180, 175, 0.7);
+                cursor: pointer;
+                color: white;
+                font-size:1.5rem;
+            }
+
+            .addToCart {
+                margin-left: 20px;
+                width:auto;
+                font-size: 1rem;
+            }
+
+
+
+        }
+
+    }
+}

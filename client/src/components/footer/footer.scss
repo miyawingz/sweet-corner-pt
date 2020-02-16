@@ -1,0 +1,43 @@
+.footer {
+    background-color: #06b4af;
+    height: 80px;
+    color: white;
+    margin: 0 auto;
+    font-size: 1rem;
+
+    div {
+        display: inline-block;
+        height: 100%;
+        vertical-align: top;
+        box-sizing: border-box;
+    }
+
+    .dots {
+        width: 20%;
+
+        img {
+            padding-left: 20%;
+            padding-top: 7%;
+        }
+    }
+
+    .center {
+        width: 60%;
+        padding-top: 5%;
+    }
+
+    .contact {
+        width: 20%;
+        padding-top:3%;
+
+        img {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        p {
+            display: inline;
+            margin: 0px;
+        }
+    }
+}

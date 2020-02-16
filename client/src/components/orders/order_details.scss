@@ -1,0 +1,68 @@
+.order {
+    h2 {
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        font-style: italic;
+        margin-top: 0px;
+        font-weight: normal;
+    }
+
+    .order-details {
+        p {
+            text-align: left;
+            font-size: 1.25rem;
+            font-weight: bold;
+
+            span {
+                font-weight: normal;
+            }
+        }
+
+        table {
+            margin: 20px 20px 0px;
+            width: 100%;
+
+            tr {
+
+                td {
+                    width: 15%
+                }
+
+                .thumbnail,
+                .name {
+                    width: 27.5%;
+                }
+
+                .thumbnail {
+                    padding: auto;
+                    text-align: right;
+
+                    img {
+                        height: 100px;
+                    }
+                }
+
+                td {
+                    box-sizing: border-box;
+                    padding: 10px;
+                }
+            }
+
+            thead,
+            .total,
+            tfoot {
+                font-weight: bold;
+            }
+
+            tfoot {
+                font-size: 2rem;
+
+                td:first-child {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
