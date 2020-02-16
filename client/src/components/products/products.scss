@@ -1,0 +1,22 @@
+.products {
+    width: 100%;
+    padding-bottom: 40px;
+    font-family: sans-serif, 'Times New Roman';
+
+    .product-item {
+        display: inline-block;
+        width: 33%;
+        vertical-align: middle;
+        padding: 10px 0px;
+    }
+
+    .product-item:hover {
+        background-color: rgba(6, 180, 175, 0.7);
+        cursor: pointer;
+        color: white;
+    }
+
+    p {
+        font-weight: bold;
+    }
+}

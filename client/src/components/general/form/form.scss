@@ -1,0 +1,27 @@
+.input-field {
+
+    input,
+    textarea {
+        width: 100%;
+        height: 35px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: none;
+        padding: 0px;
+        padding-left: 15px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: brown;
+    }
+
+    textarea {
+        height: 115px;
+        padding-top: 5px;
+    }
+
+    p {
+        color: red;
+    }
+}

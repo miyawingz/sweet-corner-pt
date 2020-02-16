@@ -1,0 +1,21 @@
+@font-face {
+    font-family: allura;
+    src: url('../../assets/fonts/Allura-Regular.ttf');
+}
+
+.header {
+    img {
+        display: block;
+        margin: 0px auto;
+    }
+
+    p {
+        font-family: allura, sans-serif;
+        color: #754b23;
+        font-size: 1.5rem;
+        margin: 5px auto;
+        font-weight: bold;
+    }
+
+    border-bottom:24px solid #754b23;
+}

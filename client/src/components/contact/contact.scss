@@ -1,0 +1,92 @@
+.contact {
+
+    p.subtitle{
+        font-weight: bold;
+        margin-top:18px;
+    }
+
+    .content {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+        box-sizing: border-box;
+        padding-left: 50px;
+
+        p.subtitle{
+            font-size:1.5rem;
+        }
+
+        img {
+            padding-top:30px;
+            padding-left:280px;
+        }
+    }
+
+    .contactForm {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+        box-sizing: border-box;
+        padding-left: 80px;
+
+        form {
+            width: 310px;
+
+            div:nth-child(3n+1) {
+                input {
+                    background-color: #e86b35;
+                }
+            }
+
+            div:nth-child(3n+2) {
+
+                input,
+                textarea {
+                    background-color: #f6b53e;
+                }
+            }
+
+            div:nth-child(3n+3) {
+
+                input,
+                button {
+                    background-color: #06b4af;
+                }
+            }
+
+            button {
+                width: 155px;
+                height: 35px;
+                color: white;
+                padding: 0px;
+                margin: 5px auto 10px 50%;
+                border: none;
+            }
+
+            p {
+                margin: 0px;
+            }
+        }
+
+    }
+
+    .schedule {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+        padding: 0px 0px 30px 45px;
+        box-sizing: border-box;
+
+        p {
+            padding-left: 5px;
+        }
+    }
+
+    .backgroundImg {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        padding-top:75px;
+    }
+}
