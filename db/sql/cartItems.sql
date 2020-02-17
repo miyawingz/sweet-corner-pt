@@ -3,10 +3,11 @@ DROP TABLE IF EXISTS "cartItems";
 CREATE TABLE "cartItems" (
   "id" SERIAL,
   "pid" uuid NOT NULL DEFAULT uuid_generate_v4 (),
-  "productId" int NOT NULL,
+  "cartId" int NOT NULL,
+  "productId" int REFERENCES products(id),
   "quantity" int DEFAULT NULL,
   "createdAt" timestamptz NOT NULL DEFAULT NOW(),
   "updatedAt" timestamptz NOT NULL DEFAULT NOW(),
   "deletedAt" timestamptz DEFAULT NULL,
-  PRIMARY KEY ("pid","productId")
+  PRIMARY KEY ("cartId","productId")
 );

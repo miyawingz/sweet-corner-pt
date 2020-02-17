@@ -17,7 +17,71 @@ router.post('/items/:product_id', tokenHandler, cartAuth, async (req, res, next)
         const queryInfoStatus = queries.UpdateCartStatus(cartId, 2);
         const results = await queryAsync(queryInfoStatus.text, queryInfoStatus.values);
 
-        res.send({ ...rows[0], cartId, cartToken })
+        const { data } = rows[0];
+
+        res.send({
+            cartId,
+            cartToken,
+            item: data.item,
+            message: `${data.item.quantity} ${data.item.name} cupcakes added to cart`,
+            total: data.total
+        })
+        return;
+
+    } catch (err) {
+        next(err);
+    }
+})
+
+router.get('/totals', tokenHandler, async (req, res, next) => {
+    const { cartId, uid } = res.locals;
+    try {
+        if (cartId || uid) {
+            const queryInfo = queries.GetCartTotal(uid, cartId);
+            const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
+            if (rowCount > 0) {
+                res.send({ ...rows[0] });
+                return;
+            }
+        }
+
+        throw new apiError(500, {
+            "cartId": null,
+            "message": "No active cart"
+        })
+
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.get('/', tokenHandler, async (req, res, next) => {
+    const { cartId, uid } = res.locals;
+    try {
+        if (cartId) {
+            const queryInfo = queries.GetCartByCartId(cartId);
+            const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
+            const { data } = rows[0];
+            res.send({
+                cartId,
+                items: data.items,
+                total: data.total
+            })
+            return;
+        }
+
+        if (uid) {
+            const queryInfo = queries.GetCartByUser(uid);
+            const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
+            res.send({ ...rows[0] });
+            return;
+        }
+
+        throw new apiError(500, {
+            "cartId": null,
+            "message": "No active cart"
+        })
+
     } catch (err) {
         next(err);
     }
