@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS "products";
 
   CREATE TABLE "products" (
-      "id" SERIAL,
+      "id" SERIAL UNIQUE,
       "pid" uuid NOT NULL DEFAULT uuid_generate_v4 (),
       "createdById" int NOT NULL,
       "caption" text DEFAULT NULL,
@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS "products";
       "createdAt" timestamptz NOT NULL DEFAULT NOW(),
       "updatedAt" timestamptz NOT NULL DEFAULT NOW(),
       "deletedAt" timestamptz DEFAULT NULL,
+      PRIMARY KEY ("id","pid")
   );
 
   INSERT INTO "products" ("caption", "cost", "description", "id", "name", "createdAt", "updatedAt", "deletedAt", "createdById") VALUES
