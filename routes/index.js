@@ -7,6 +7,7 @@ function ApplyRoutes(app) {
     apiRouter.use('/cart', require('./cart'));
     apiRouter.use('/products', require('./products'));
     apiRouter.use('/orders', require('./orders'));
+    apiRouter.use('/auth', require('./auth'));
 
     app.use('/api', apiRouter);
 
