@@ -5,14 +5,18 @@ function GetCartTotal(uid, cartId) {
             SELECT (
                 SELECT "pid" AS "cartId" 
                 FROM "carts" 
-                WHERE "userId"=$1 AND "statusId"=2
+                WHERE "userId" IN (
+                    SELECT "id"
+                    FROM "users"
+                    WHERE "pid"=$1
+                ) AND "statusId"=2
             ), 
             "total" 
             FROM "cartTotalView" 
-            WHERE "cartId" IN (
+            WHERE "userId" IN (
                 SELECT "id"
-                FROM "carts"
-                WHERE "userId"=$1
+                FROM "users"
+                WHERE "pid"=$1
             )`,
             values: [uid]
         }

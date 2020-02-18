@@ -8,7 +8,6 @@ const ApiError = require('../../lib/apiError');
 const { tokenHandler } = require('../../middleware/token_handler');
 const { tokenEncode } = require('../../lib/jwtHandler');
 
-
 router.post('/', tokenHandler, async (req, res, next) => {
     const { email, firstName, lastName, password } = req.body;
     const { cartId } = res.locals;

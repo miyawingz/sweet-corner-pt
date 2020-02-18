@@ -45,9 +45,10 @@ router.get('/totals', tokenHandler, async (req, res, next) => {
             }
         }
 
-        throw new apiError(500, {
+        res.send({
             "cartId": null,
-            "message": "No active cart"
+            "message": "No active cart",
+            "total":0
         })
 
     } catch (err) {
@@ -73,14 +74,15 @@ router.get('/', tokenHandler, async (req, res, next) => {
         if (uid) {
             const queryInfo = queries.GetCartByUser(uid);
             const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
-            res.send({ ...rows[0] });
+            res.send({ ...rows[0].data });
             return;
         }
 
-        throw new apiError(500, {
+        res.send({
             "cartId": null,
-            "message": "No active cart"
-        })
+            "message": "No active cart",
+            "total":0
+        });
 
     } catch (err) {
         next(err);

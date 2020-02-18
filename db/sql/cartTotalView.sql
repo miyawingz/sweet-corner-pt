@@ -1,6 +1,6 @@
 DROP VIEW IF EXISTS "cartTotalView";
 CREATE VIEW "cartTotalView" AS 
-SELECT "cartItems"."cartId", 
+SELECT "cartItems"."cartId", "carts"."userId"
     (SELECT row_to_json(subQ) AS "total" 
     FROM (
         SELECT SUM(c."quantity"*p."cost") AS "cost", SUM(c."quantity") AS "items"
@@ -8,5 +8,5 @@ SELECT "cartItems"."cartId",
         WHERE c."cartId"="cartItems"."cartId"
         )subQ
     )
-FROM "cartItems" 
+FROM "cartItems" JOIN "carts" on "cartItems"."cartId"="carts"."id"
 GROUP BY "cartItems"."cartId";

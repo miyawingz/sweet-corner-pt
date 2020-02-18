@@ -20,7 +20,7 @@ async function cartAuth(req, res, next) {
             const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
 
             if (rowCount > 0) {
-                cartId = rows[0].cartId;
+                cartId = rows[0].data.cartId;
             } else {
                 const queryInfo = queries.CreateNewCart(uid);
                 const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
