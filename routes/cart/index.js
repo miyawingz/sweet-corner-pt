@@ -48,7 +48,7 @@ router.get('/totals', tokenHandler, async (req, res, next) => {
         res.send({
             "cartId": null,
             "message": "No active cart",
-            "total":0
+            "total": 0
         })
 
     } catch (err) {
@@ -81,7 +81,7 @@ router.get('/', tokenHandler, async (req, res, next) => {
         res.send({
             "cartId": null,
             "message": "No active cart",
-            "total":0
+            "total": 0
         });
 
     } catch (err) {
@@ -89,4 +89,5 @@ router.get('/', tokenHandler, async (req, res, next) => {
     }
 })
 
+router.use('/items/:item_id', require('./ItemInCart'));
 module.exports = router;

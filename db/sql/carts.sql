@@ -6,7 +6,7 @@ CREATE TABLE "carts" (
   "statusId" int NOT NULL,
   "userId" int DEFAULT NULL,
   "lastInteraction" timestamptz NOT NULL DEFAULT NOW(),
-  "createdAt" timestamptz NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT NOW(),
   "updatedAt" timestamptz NOT NULL DEFAULT NOW(),
   "deletedAt" timestamptz DEFAULT NULL
 );
