@@ -7,7 +7,8 @@ function GetCartByUser(uid) {
             (
                 SELECT "pid" as "cartId"
                 FROM "carts" 
-                WHERE "userId" IN (
+                WHERE "statusId"=2 AND 
+                "userId" IN (
                     SELECT "id"
                     FROM "users"
                     WHERE "pid"=$1

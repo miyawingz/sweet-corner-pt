@@ -4,17 +4,19 @@ const queries = require('../../queries');
 const { queryAsync } = require('../../db');
 const { cartAuth } = require('../../middleware/cart_auth');
 const { tokenHandler } = require('../../middleware/token_handler');
+const { sqlIdHandler } = require('../../middleware/sqlId_handler');
 
-router.post('/items/:product_id', tokenHandler, cartAuth, async (req, res, next) => {
+router.post('/items/:product_id', tokenHandler,sqlIdHandler, cartAuth, async (req, res, next) => {
     const { cartId, cartToken } = res.locals.cartInfo;
     const productId = req.params['product_id'];
     const quantity = req.body.quantity || 1;
+    const cartIdSQL = res.locals.sqlInfo.cartId;
 
     try {
         const queryInfo = queries.AddItemToCart(cartId, productId, quantity)
         const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
 
-        const queryInfoStatus = queries.UpdateCartStatus(cartId, 2);
+        const queryInfoStatus = queries.UpdateCartStatus(cartIdSQL, 2);
         const results = await queryAsync(queryInfoStatus.text, queryInfoStatus.values);
 
         const { data } = rows[0];
@@ -89,5 +91,8 @@ router.get('/', tokenHandler, async (req, res, next) => {
     }
 })
 
-router.use('/items/:item_id', require('./ItemInCart'));
+router.use('/items', require('./ItemInCart'));
+
+// .put(require('./SetItemQuantityInCart'))
+
 module.exports = router;

@@ -26,7 +26,7 @@ router.post('/', tokenHandler, async (req, res, next) => {
         }
 
         const uid = rows[0].pid;
-        const token = tokenEncode({ uid });
+        const token = tokenEncode({ uid, iat: Date.now(), exp: new Date(Date.now().getDate() + 14) });
 
         if (cartId) {
             const queryInfo = queries.UpdateCartUserId(uid, cartId);

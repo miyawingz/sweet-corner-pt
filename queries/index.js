@@ -1,6 +1,7 @@
 const { AddItemToCart } = require('./AddItemToCart');
 const { CreateNewCart } = require('./CreateNewCart');
 const { CreateNewUser } = require('./CreateNewUser');
+const { DeleteItemInCart } = require('./DeleteItemInCart');
 const { GetAllProducts } = require('./GetAllProducts');
 const { GetCartByCartId } = require('./GetCartByCartId');
 const { GetCartByUser } = require('./GetCartByUser');
@@ -17,6 +18,7 @@ module.exports = {
     AddItemToCart,
     CreateNewCart,
     CreateNewUser,
+    DeleteItemInCart,
     GetAllProducts,
     GetCartByCartId,
     GetCartByUser,
