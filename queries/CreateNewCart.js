@@ -4,7 +4,7 @@ function CreateNewCart(uid) {
             ("statusId","userId","createdAt") 
             VALUES
             (1,$1,now())
-            RETURNING "carts"."pid" as "cartId", "carts"."id" as "cartIdSQL"`,
+            RETURNING "carts"."pid" as "cartId", "carts"."id"`,
         values: [uid || null]
     }
 }

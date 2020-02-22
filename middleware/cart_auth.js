@@ -4,6 +4,7 @@ const queries = require('../queries');
 
 async function cartAuth(req, res, next) {
     const { token, uid } = res.locals;
+    const { uidSQL } = res.locals.sqlInfo;
     let cartId = res.locals.cartId;
 
     try {
@@ -12,19 +13,22 @@ async function cartAuth(req, res, next) {
             const queryInfo = queries.CreateNewCart();
             const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
             cartId = rows[0].cartId;
+            res.locals.sqlInfo.cartIdSQL = rows[0].id;
         }
 
-        if (!cartId && uid) {
+        if (!cartId && uid && uidSQL) {
             // get cart by uid, if no cart, then create cart w/ uid
-            const queryInfo = queries.GetCartByUser(uid);
+            const queryInfo = queries.GetCartIdByUser(uidSQL, 2);
             const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
 
             if (rowCount > 0) {
-                cartId = rows[0].data.cartId;
+                cartId = rows[0].cartId;
+                res.locals.sqlInfo.cartIdSQL = rows[0].id;
             } else {
                 const queryInfo = queries.CreateNewCart(uidSQL);
                 const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
                 cartId = rows[0].cartId;
+                res.locals.sqlInfo.cartIdSQL = rows[0].id;
             }
         }
 

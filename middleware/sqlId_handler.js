@@ -3,8 +3,8 @@ const { queryAsync } = require('../db');
 const ApiError = require('../lib/apiError');
 
 async function sqlIdHandler(req, res, next) {
-    const { uid } = res.locals;
-    const cartId = res.locals.cartInfo ? res.locals.cartInfo.cartId : res.locals.cartId;
+    const { uid, cartId } = res.locals;
+    // const cartId = res.locals.cartInfo ? res.locals.cartInfo.cartId : res.locals.cartId;
     const productId = req.params['product_id'];
     const orderId = req.params['order_id'];
     const itemId = req.params['item_id'];

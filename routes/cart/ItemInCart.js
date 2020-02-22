@@ -7,7 +7,7 @@ const { tokenHandler } = require('../../middleware/token_handler');
 const { sqlIdHandler } = require('../../middleware/sqlId_handler');
 const ApiError = require('../../lib/apiError');
 
-router.post('/:product_id', tokenHandler, cartAuth, sqlIdHandler, async (req, res, next) => {
+router.post('/:product_id', tokenHandler, sqlIdHandler, cartAuth, async (req, res, next) => {
     const { cartId, cartToken } = res.locals.cartInfo;
     const { productIdSQL, cartIdSQL } = res.locals.sqlInfo;
     const quantity = req.body.quantity || 1;
