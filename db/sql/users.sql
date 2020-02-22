@@ -8,7 +8,7 @@ CREATE TABLE "users" (
 "email" TEXT NOT NULL,
 "password" TEXT NOT NULL,
 "lastAccessedAt" timestamptz NOT NULL DEFAULT now(),
-"createdAt" timestamptz NOT NULL,
+"createdAt" timestamptz NOT NULL DEFAULT now(),
 "updatedAt" timestamptz NOT NULL DEFAULT now(),
 "deletedAt" timestamptz DEFAULT NULL,
 PRIMARY KEY ("email")

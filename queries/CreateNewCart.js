@@ -1,10 +1,10 @@
 function CreateNewCart(uid) {
     return {
         text: `INSERT INTO "carts" 
-            ("statusId","userId") 
+            ("statusId","userId","createdAt") 
             VALUES
-            (1,$1)
-            RETURNING "carts"."pid" as "cartId"`,
+            (1,$1,now())
+            RETURNING "carts"."pid" as "cartId", "carts"."id" as "cartIdSQL"`,
         values: [uid || null]
     }
 }

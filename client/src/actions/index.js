@@ -48,8 +48,9 @@ export const addItemToCart = (productId, quantity) => async (dispatch) => {
                     'Authorization': auth,
                 }
             }
-        } else {
-            const cartToken = localStorage.getItem('sc-cart-token');
+        }
+        const cartToken = localStorage.getItem('sc-cart-token');
+        if (cartToken) {
             axiosConfig = {
                 headers: {
                     'X-Cart-Token': cartToken
@@ -57,7 +58,7 @@ export const addItemToCart = (productId, quantity) => async (dispatch) => {
             }
         }
 
-        const resp = await axios.post(`${BASE_URL}/api/cart/items/${productId}`, {
+        const resp = await axios.post(`/api/cart/items/${productId}`, {
             quantity: quantity
         }, axiosConfig)
 
@@ -86,8 +87,9 @@ export const getActiveCart = () => async (dispatch) => {
                     'Authorization': auth,
                 }
             }
-        } else {
-            const cartToken = localStorage.getItem('sc-cart-token');
+        }
+        const cartToken = localStorage.getItem('sc-cart-token');
+        if (cartToken) {
             axiosConfig = {
                 headers: {
                     'X-Cart-Token': cartToken
@@ -95,7 +97,7 @@ export const getActiveCart = () => async (dispatch) => {
             }
         }
 
-        const resp = await axios.get(`${BASE_URL}/api/cart`, axiosConfig);
+        const resp = await axios.get(`/api/cart`, axiosConfig);
 
         dispatch({
             type: types.GET_ACTIVE_CART,
@@ -118,8 +120,10 @@ export const getCartTotals = () => async (dispatch) => {
                     'Authorization': auth,
                 }
             }
-        } else {
-            const cartToken = localStorage.getItem('sc-cart-token');
+        }
+
+        const cartToken = localStorage.getItem('sc-cart-token');
+        if (cartToken) {
             axiosConfig = {
                 headers: {
                     'X-Cart-Token': cartToken
@@ -127,7 +131,7 @@ export const getCartTotals = () => async (dispatch) => {
             }
         }
 
-        const resp = await axios.get(`${BASE_URL}/api/cart/totals`, axiosConfig);
+        const resp = await axios.get(`/api/cart/totals`, axiosConfig);
 
         dispatch({
             type: types.GET_CART_TOTALS,
@@ -225,13 +229,16 @@ export function deleteItemFromCart(id) {
 export const signUp = (user) => async (dispatch) => {
     try {
         const cartToken = localStorage.getItem('sc-cart-token');
-        const axiosConfig = {
-            headers: {
-                'X-Cart-Token': cartToken
+        let axiosConfig = {};
+        if (cartToken) {
+            axiosConfig = {
+                headers: {
+                    'X-Cart-Token': cartToken
+                }
             }
         }
 
-        const resp = await axios.post(`${BASE_URL}/auth/create-account`, user, axiosConfig);
+        const resp = await axios.post(`/api/auth/create-account`, user, axiosConfig);
         localStorage.setItem('Authorization', resp.data.token);
         localStorage.removeItem('sc-cart-token');
 
@@ -251,12 +258,15 @@ export const signUp = (user) => async (dispatch) => {
 export const signIn = (user) => async (dispatch) => {
     try {
         const cartToken = localStorage.getItem('sc-cart-token');
-        const axiosConfig = {
-            headers: {
-                'X-Cart-Token': cartToken
+        let axiosConfig = {};
+        if (cartToken) {
+            axiosConfig = {
+                headers: {
+                    'X-Cart-Token': cartToken
+                }
             }
         }
-        const resp = await axios.post(`${BASE_URL}/auth/sign-in`, user, axiosConfig);
+        const resp = await axios.post(`/api/auth/sign-in`, user, axiosConfig);
         localStorage.setItem('Authorization', resp.data.token);
         localStorage.removeItem('sc-cart-token');
 

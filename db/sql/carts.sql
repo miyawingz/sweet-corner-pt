@@ -8,5 +8,6 @@ CREATE TABLE "carts" (
   "lastInteraction" timestamptz NOT NULL DEFAULT NOW(),
   "createdAt" timestamptz NOT NULL DEFAULT NOW(),
   "updatedAt" timestamptz NOT NULL DEFAULT NOW(),
-  "deletedAt" timestamptz DEFAULT NULL
+  "deletedAt" timestamptz DEFAULT NULL,
+  PRIMARY KEY ("id")
 );

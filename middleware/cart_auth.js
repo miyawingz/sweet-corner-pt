@@ -20,15 +20,15 @@ async function cartAuth(req, res, next) {
             const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
 
             if (rowCount > 0) {
-                cartId = rows[0].cartId;
+                cartId = rows[0].data.cartId;
             } else {
-                const queryInfo = queries.CreateNewCart(uid);
+                const queryInfo = queries.CreateNewCart(uidSQL);
                 const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
                 cartId = rows[0].cartId;
             }
         }
 
-        res.locals.cartInfo = { cartId, cartToken: tokenEncode({ cartId }) }
+        res.locals.cartInfo = { cartId, cartToken: tokenEncode({ cartId }) };
         next();
 
     } catch (error) {

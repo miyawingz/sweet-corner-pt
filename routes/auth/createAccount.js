@@ -4,10 +4,9 @@ const queries = require('../../queries');
 const { queryAsync } = require('../../db');
 const { generate } = require('../../lib/hash');
 const { emailValidate, passwordValidate } = require('../../lib/userUtils');
-const ApiError = require('../../lib/apiError');
-const { tokenHandler } = require('../../middleware/token_handler');
 const { tokenEncode } = require('../../lib/jwtHandler');
-
+const { tokenHandler } = require('../../middleware/token_handler');
+const ApiError = require('../../lib/apiError');
 
 router.post('/', tokenHandler, async (req, res, next) => {
     const { email, firstName, lastName, password } = req.body;
@@ -27,7 +26,7 @@ router.post('/', tokenHandler, async (req, res, next) => {
         }
 
         const uid = rows[0].pid;
-        const token = tokenEncode({ uid });
+        const token = tokenEncode({ uid, iat: Date.now(), exp: new Date(Date.now().getDate() + 14) });
 
         if (cartId) {
             const queryInfo = queries.UpdateCartUserId(uid, cartId);
