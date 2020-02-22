@@ -12,7 +12,7 @@
     "dev:startClient": "npm run start --prefix client",
     "start": "concurrently 'npm run dev:*'",
     "db:export":"pg_dump \"sweetCornerPt\" > db_dump.sql",
-    "db:import":"pg_dump \"sweetCornerPt\" < db_dump.sql"
+    "db:import":"psql \"sweetCornerPt\" < db_dump.sql"
   },
   "repository": {
     "type": "git",
