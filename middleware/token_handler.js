@@ -8,7 +8,6 @@ async function tokenHandler(req, res, next) {
     let decode = {}
     if (token) {
         decode = tokenDecode(token);
-        res.locals.token = token;
     }
 
     res.locals.token = token;

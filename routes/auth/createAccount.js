@@ -18,6 +18,12 @@ router.post('/', tokenHandler, async (req, res, next) => {
             return next(new ApiError(422, 'invalid email or password'));
         }
 
+        const queryInfoEmail = queries.GetUserByEmail(email);
+        const ResultEmail = await queryAsync(queryInfoEmail.text, queryInfoEmail.values)
+        if (ResultEmail.rowCount > 0) {
+            return next(new ApiError(500, 'email already registered'));
+        }
+
         const queryInfo = queries.CreateNewUser(email, firstName, lastName, hashPW);
         const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
 
@@ -26,11 +32,11 @@ router.post('/', tokenHandler, async (req, res, next) => {
         }
 
         const uid = rows[0].pid;
-        const token = tokenEncode({ uid, iat: Date.now(), exp: new Date(Date.now().getDate() + 14) });
+        const token = tokenEncode({ uid, iat: Date.now(), exp: (Date.now() + 12096e5) });
 
         if (cartId) {
             const queryInfo = queries.UpdateCartUserId(uid, cartId);
-            const result = await queryAsync(queryInfo.text, queryInfo.values);
+            await queryAsync(queryInfo.text, queryInfo.values);
         }
 
         res.send({

@@ -4,7 +4,6 @@ const queries = require('../../queries');
 const { query } = require('../../db');
 const ApiError = require('../../lib/apiError');
 
-// router.param("productId", pidToId("products"))
 router.get('/full', (req, res, next) => {
 
 })
