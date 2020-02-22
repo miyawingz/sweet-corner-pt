@@ -33,4 +33,4 @@ SELECT  a."pid" as "itemId",
         totalSubQ
         )
 FROM "cartItems" as a
-GROUP BY a."pid"
+GROUP BY a."pid";
