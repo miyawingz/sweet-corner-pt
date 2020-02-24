@@ -11,6 +11,11 @@ async function tokenHandler(req, res, next) {
     }
 
     res.locals.token = token;
+
+    if (decode.exp && Date.now() > decode.exp) {
+        return next(new ApiError(500, 'token has expired'))
+    }
+    
     res.locals.uid = decode.uid;
     res.locals.cartId = decode.cartId;
 
