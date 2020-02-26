@@ -16,20 +16,20 @@ async function cartAuth(req, res, next) {
             res.locals.sqlInfo.cartIdSQL = rows[0].id;
         }
 
-        if (!cartId && uid && uidSQL) {
+        if (!cartId && uid) {
             // get cart by uid, if no cart, then create cart w/ uid
-            const queryInfo = queries.GetCartIdByUser(uidSQL, 2);
-            const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
+            // const queryInfo = queries.GetCartIdByUser(uidSQL, 2);
+            // const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
 
-            if (rowCount > 0) {
-                cartId = rows[0].cartId;
-                res.locals.sqlInfo.cartIdSQL = rows[0].id;
-            } else {
+            // if (rowCount > 0) {
+            //     cartId = rows[0].cartId;
+            //     res.locals.sqlInfo.cartIdSQL = rows[0].id;
+            // } else {
                 const queryInfo = queries.CreateNewCart(uidSQL);
                 const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
                 cartId = rows[0].cartId;
                 res.locals.sqlInfo.cartIdSQL = rows[0].id;
-            }
+            // }
         }
 
         res.locals.cartInfo = { cartId, cartToken: tokenEncode({ cartId }) };

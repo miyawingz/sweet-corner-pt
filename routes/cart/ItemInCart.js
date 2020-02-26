@@ -42,8 +42,8 @@ router.post('/:product_id', tokenHandler, sqlIdHandler, cartAuth, async (req, re
 router.route('/:item_id')
     .all(
         tokenHandler,
-        sqlIdHandler,
-        GetCartIdByUser
+        sqlIdHandler
+        // GetCartIdByUser
     )
     .patch(UpdateItemQuantityInCart)
     .put(SetItemQuantityInCart)
@@ -172,17 +172,17 @@ async function DeteleItem(itemId, cartIdSQL) {
     }
 }
 
-async function GetCartIdByUser(req, res, next) {
-    if (!res.locals.sqlInfo.cartIdSQL) {
-        const queryInfo = queries.GetCartIdByUser(res.locals.sqlInfo.uidSQL, 2);
-        const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-        if (rowCount == 0) {
-            return next(new ApiError(500, 'invalid cart auth'))
-        }
-        res.locals.sqlInfo.cartIdSQL = rows[0].id;
-        res.locals.cartId = rows[0].cartId;
-    }
-    next()
-}
+// async function GetCartIdByUser(req, res, next) {
+//     if (!res.locals.sqlInfo.cartIdSQL) {
+//         const queryInfo = queries.GetCartIdByUser(res.locals.sqlInfo.uidSQL, 2);
+//         const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
+//         if (rowCount == 0) {
+//             return next(new ApiError(500, 'invalid cart auth'))
+//         }
+//         res.locals.sqlInfo.cartIdSQL = rows[0].id;
+//         res.locals.cartId = rows[0].cartId;
+//     }
+//     next()
+// }
 
 module.exports = router;
