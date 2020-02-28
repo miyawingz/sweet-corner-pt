@@ -10,9 +10,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:startServer": "nodemon index.js",
     "dev:startClient": "npm run start --prefix client",
-    "start":"concurrently 'npm run dev:*'",
-    "db:export":"pg_dump \"sweetCornerPt\" > db_dump.sql",
-    "db:import":"psql \"sweetCornerPt\" < db_dump.sql"
+    "dev:buildAndStart": "npm run bundle --prefix client && npm run dev:startServer",
+    "start:dev": "concurrently 'npm run dev:*'",
+    "start": "node index.js",
+    "db:export": "pg_dump \"sweetCornerPt\" > db_dump.sql",
+    "db:import": "psql \"sweetCornerPt\" < db_dump.sql",
+    "db:importProd": "psql \"sweetCornerApi\" < db_dump.sql"
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,7 @@
   "homepage": "https://github.com/miyawingz/sweet-corner-pt#readme",
   "dependencies": {
     "bcrypt": "^3.0.8",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jwt-simple": "^0.5.6",
     "pg": "^7.18.1"
