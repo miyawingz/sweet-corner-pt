@@ -16,16 +16,12 @@ router.get('/', tokenHandler, async (req, res, next) => {
             return next(new ApiError(400, 'invalid user token'))
         }
 
-        const decode = tokenDecode(token);
-        if (Date.now() > decode.exp) {
-            return next(new ApiError(500, 'token has expired'))
-        }
-
         const queryInfo = queries.GetUserByUid(uid);
         const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
         if (rowCount === 0) {
             return next(new ApiError(400, 'invalid user token'))
         }
+
         res.send({ user: rows[0] })
 
     } catch (err) {
@@ -56,6 +52,18 @@ router.post('/', tokenHandler, async (req, res, next) => {
         }
 
         if (cartId) {
+            const queryInfoUidSQL = queries.GetIdInSQL('users', pid);
+            const { rows } = await queryAsync(queryInfoUidSQL.text, queryInfoUidSQL.values);
+
+            const queryInfoGetCurrentCart = queries.GetCartIdByUser(rows[0].id, 2);
+            const ResultCurrentCart = await queryAsync(queryInfoGetCurrentCart.text, queryInfoGetCurrentCart.values);
+            if (ResultCurrentCart.rowCount > 0) {
+                for (let i = 0; i < ResultCurrentCart.rowCount; i++) {
+                    const queryInfoCartStatus = queries.UpdateCartStatus(ResultCurrentCart.rows[i].id, 5);
+                    await queryAsync(queryInfoCartStatus.text, queryInfoCartStatus.values);
+                }
+            }
+
             const queryInfo = queries.UpdateCartUserId(pid, cartId);
             await queryAsync(queryInfo.text, queryInfo.values);
         }

@@ -4,7 +4,6 @@ const ApiError = require('../lib/apiError');
 
 async function sqlIdHandler(req, res, next) {
     const { uid, cartId } = res.locals;
-    // const cartId = res.locals.cartInfo ? res.locals.cartInfo.cartId : res.locals.cartId;
     const productId = req.params['product_id'];
     const itemId = req.params['item_id'];
     res.locals.sqlInfo = {};
@@ -19,20 +18,20 @@ async function sqlIdHandler(req, res, next) {
             res.locals.sqlInfo.uidSQL = rows[0].id;
 
             if (!cartId) {
-                const queryInfo = queries.GetCartIdByUser(rows[0].id, 2);
-                const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-                if (rowCount > 0) {
-                    res.locals.sqlInfo.cartIdSQL = rows[0].id;
-                    res.locals.cartId = rows[0].cartId;
+                const queryInfoCart = queries.GetCartIdByUser(rows[0].id, 2);
+                const ResultCart = await queryAsync(queryInfoCart.text, queryInfoCart.values);
+                if (ResultCart.rowCount > 0) {
+                    res.locals.sqlInfo.cartIdSQL = ResultCart.rows[0].id;
+                    res.locals.cartId = ResultCart.rows[0].cartId;
                 }
             }
         }
 
-        if (!uid && cartId) {
+        if (cartId) {
             const queryInfo = queries.GetIdInSQL('carts', cartId);
             const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
             if (rowCount < 1) {
-                return next(new ApiError(500, 'invalid cart token, cart does not exist'));
+                return next(new ApiError(500, 'invalid cart token, active cart does not exist'));
             }
             res.locals.sqlInfo.cartIdSQL = rows[0].id;
         }
@@ -48,6 +47,11 @@ async function sqlIdHandler(req, res, next) {
         }
 
         if (itemId) {
+            const queryInfo = queries.GetIdInSQL('cartItems', itemId);
+            const { rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
+            if (rowCount < 1) {
+                return next(new ApiError(500, 'cart item does not exist'));
+            }
             res.locals.itemId = itemId;
         }
 

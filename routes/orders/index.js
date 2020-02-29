@@ -19,11 +19,14 @@ router.post('/', tokenHandler, sqlIdHandler, async (req, res, next) => {
             return next(new ApiError(500, 'invalid auth, no cart to check out'));
         }
 
+        const queryInfoStatus = queries.UpdateCartStatus(cartIdSQL, 3);
+        await queryAsync(queryInfoStatus.text, queryInfoStatus.values);
+
         res.send({
             message: "Your order has been placed",
             id: rows[0].pid
         })
-        
+
     } catch (err) {
         next(err)
     }
@@ -37,7 +40,7 @@ router.get('/:order_id', tokenHandler, sqlIdHandler, async (req, res, next) => {
 
     try {
         if (!orderId || !uidSQL) {
-            return next(new ApiError('invalid order id or auth'))
+            return next(new ApiError(500, 'invalid order id or auth'));
         }
 
         const result = await GetOrderDetails('users', uidSQL, orderId);
@@ -45,9 +48,27 @@ router.get('/:order_id', tokenHandler, sqlIdHandler, async (req, res, next) => {
         res.send({ ...result })
 
     } catch (err) {
-
+        next(err);
     }
 
+})
+
+router.get('/', tokenHandler, sqlIdHandler, async (req, res, next) => {
+    const { uidSQL } = res.locals.sqlInfo;
+    try {
+        if (!uidSQL) {
+            return next(new ApiError(500, 'invalid user auth'));
+        }
+        const queryInfo = queries.GetOrderListByUser(uidSQL);
+        const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
+        if (rowCount < 1) {
+            return next(new ApiError(500, 'fail to obtian order list'))
+        }
+        res.send(rows[0])
+
+    } catch (err) {
+        next(err);
+    }
 })
 
 router.post('/guest', tokenHandler, sqlIdHandler, async (req, res, next) => {
@@ -59,19 +80,14 @@ router.post('/guest', tokenHandler, sqlIdHandler, async (req, res, next) => {
             return next(new ApiError(500, 'invalid email or name'));
         }
 
-        const { rows, rowCount } = await queryAsync(`SELECT * FROM "spCreateGuestOrder($1,$2,$3,$4)"`, [email, firstName, lastName, cartIdSQL])
+        const { rows, rowCount } = await queryAsync(`SELECT * FROM "spCreateGuestOrder"($1,$2,$3,$4)`, [email, firstName, lastName, cartIdSQL])
 
         if (rowCount < 1) {
             return next(new ApiError(500, 'invalid guest, no cart to check out'))
         }
-        // const queryInfoCreateGuest = queries.CreateNewGuest(email, firstName, lastName);
-        // const ResultGuest = await queryAsync(queryInfoCreateGuest.text, queryInfoCreateGuest.values);
-        // if (ResultGuest.rowCount < 1) {
-        //     return next(new ApiError(500, 'fail to create guest id'))
-        // }
-        // const guestId = ResultGuest.rows[0].id;
 
-        // const orderId = await CreateNewOrder(guestId, null, cartIdSQL);
+        const queryInfoStatus = queries.UpdateCartStatus(cartIdSQL, 3);
+        await queryAsync(queryInfoStatus.text, queryInfoStatus.values);
 
         res.send({
             message: "Your order has been placed",
@@ -100,26 +116,6 @@ router.get('/guest/:order_id', async (req, res, next) => {
     }
 })
 
-// async function CreateNewOrder(guestId, userId, cartId) {
-//     const queryInfoTotal = queries.GetCartTotal('cartId', cartId);
-//     const ResultTotal = await queryAsync(queryInfoTotal.text, queryInfoTotal.values);
-//     if (ResultTotal.rowCount < 1) {
-//         return next(new ApiError(500, 'invalid cart token'))
-//     }
-//     const { total } = ResultTotal.rows[0];
-
-//     const queryInfoCreateOrder = queries.CreateNewOrder(guestId, userId, cartId, total);
-//     const { rows, rowCount } = await queryAsync(queryInfoCreateOrder.text, queryInfoCreateOrder.values);
-//     if (rowCount < 1) {
-//         return next(new ApiError(500, 'fail to create order'));
-//     }
-
-//     const queryInfoOrderItem = queries.AddItemToOrder(rows[0].id, cartId);
-//     await queryAsync(queryInfoOrderItem.text, queryInfoOrderItem.values);
-
-//     return rows[0].pid;
-// }
-
 async function GetOrderDetails(idType, id, orderId) {
     const queryInfoOrderId = queries.GetOrderId(idType, id);
     const ResultOrderId = await queryAsync(queryInfoOrderId.text, queryInfoOrderId.values);
@@ -130,7 +126,7 @@ async function GetOrderDetails(idType, id, orderId) {
     const queryInfoOrder = queries.GetOrderDetails(orderId);
     const { rows } = await queryAsync(queryInfoOrder.text, queryInfoOrder.values);
 
-    return rows;
+    return rows[0];
 }
 
 module.exports = router;

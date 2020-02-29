@@ -25,10 +25,10 @@ async function cartAuth(req, res, next) {
             //     cartId = rows[0].cartId;
             //     res.locals.sqlInfo.cartIdSQL = rows[0].id;
             // } else {
-                const queryInfo = queries.CreateNewCart(uidSQL);
-                const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
-                cartId = rows[0].cartId;
-                res.locals.sqlInfo.cartIdSQL = rows[0].id;
+            const queryInfo = queries.CreateNewCart(uidSQL);
+            const { rows } = await queryAsync(queryInfo.text, queryInfo.values);
+            cartId = rows[0].cartId;
+            res.locals.sqlInfo.cartIdSQL = rows[0].id;
             // }
         }
 

@@ -71,6 +71,7 @@ router.delete('/:cart_id', tokenHandler, sqlIdHandler, async (req, res, next) =>
         if (rowCount < 1) {
             return next(new ApiError(500, 'not authorizied to delete cart'));
         }
+
         res.send({
             message: "cart deleted",
             deletedId: cartId
@@ -83,11 +84,12 @@ router.delete('/:cart_id', tokenHandler, sqlIdHandler, async (req, res, next) =>
 router.delete('/', tokenHandler, sqlIdHandler, async (req, res, next) => {
     const { cartIdSQL } = res.locals.sqlInfo;
     const { cartId } = res.locals;
+
     try {
         if (!cartIdSQL) {
             return next(new ApiError(500, 'invalid cart'))
         }
-        
+
         const queryInfo = queries.DeleteCart(cartId, "id", cartIdSQL);
         const { rowCount } = await queryAsync(queryInfo.text, queryInfo.values)
         if (rowCount > 0) {
@@ -96,6 +98,7 @@ router.delete('/', tokenHandler, sqlIdHandler, async (req, res, next) => {
                 deletedId: cartId
             })
         }
+
     } catch (err) {
         next(err)
     }

@@ -1,6 +1,6 @@
 function GetOrderDetails(id) {
     return {
-        text: `SELECT * FROM "orderView" WHERE "id"=$1`,
+        text: `SELECT "itemCount","total","createdAt","id","status","items" FROM "orderView" WHERE "id"=$1`,
         values: [id]
     }
 }

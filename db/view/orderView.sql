@@ -1,7 +1,7 @@
 DROP VIEW IF EXISTS "orderView";
 
 CREATE VIEW "orderView" AS 
-SELECT "itemCount", "total", "createdAt", "pid" as "id",
+SELECT "userId", "itemCount", "total", "createdAt", "pid" as "id", 
     (
         SELECT "mid" 
         FROM "orderStatuses" as os 

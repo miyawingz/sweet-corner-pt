@@ -1,10 +1,10 @@
 function GetCartDetail(idType, id) {
     return {
         text: `
-                SELECT "pid" as "cartId", "items", "total" 
-                FROM "cartDetailView" JOIN "cartTotalView"
+                SELECT cd."pid" as "cartId", cd."items", ct."total" 
+                FROM "cartDetailView" as cd JOIN "cartTotalView" as ct
                 USING ("cartId")
-                WHERE "cartDetailView"."${idType}"=$1    
+                WHERE cd."${idType}"=$1    
             `,
         values: [id]
     }

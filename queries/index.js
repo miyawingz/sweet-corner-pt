@@ -1,8 +1,5 @@
 const { AddItemToCart } = require('./AddItemToCart');
-const { AddItemToOrder } = require('./AddItemToOrder');
 const { CreateNewCart } = require('./CreateNewCart');
-const { CreateNewGuest } = require('./CreateNewGuest');
-const { CreateNewOrder } = require('./CreateNewOrder');
 const { CreateNewUser } = require('./CreateNewUser');
 const { DeleteCart } = require('./DeleteCart');
 const { DeleteItemInCart } = require('./DeleteItemInCart');
@@ -14,6 +11,7 @@ const { GetProductById } = require('./GetProductById');
 const { GetIdInSQL } = require('./GetIdInSQL');
 const { GetOrderDetails } = require('./GetOrderDetails');
 const { GetOrderId } = require('./GetOrderId');
+const { GetOrderListByUser } = require('./GetOrderListByUser');
 const { GetUserByEmail } = require('./GetUserByEmail');
 const { GetUserByUid } = require('./GetUserByUid');
 const { SetItemQuantityInCart } = require('./SetItemQuantityInCart');
@@ -23,10 +21,7 @@ const { UpdateItemInCart } = require('./UpdateItemInCart');
 
 module.exports = {
     AddItemToCart,
-    AddItemToOrder,
     CreateNewCart,
-    CreateNewGuest,
-    CreateNewOrder,
     CreateNewUser,
     DeleteCart,
     DeleteItemInCart,
@@ -38,6 +33,7 @@ module.exports = {
     GetIdInSQL,
     GetOrderDetails,
     GetOrderId,
+    GetOrderListByUser,
     GetUserByEmail,
     GetUserByUid,
     SetItemQuantityInCart,
