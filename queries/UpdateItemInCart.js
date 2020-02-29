@@ -10,10 +10,3 @@ function UpdateItemInCart(quantity, itemId, cartId) {
 }
 
 module.exports.UpdateItemInCart = UpdateItemInCart;
-
-// SELECT row_to_json(a) as "data"
-// FROM (
-//     SELECT "item","total"
-//     FROM "itemView" 
-//     WHERE "itemId"=$2
-// )a

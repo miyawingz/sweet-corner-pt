@@ -9,6 +9,9 @@ const { GetCartIdByUser } = require('./GetCartIdByUser');
 const { GetCartTotal } = require('./GetCartTotal');
 const { GetProductById } = require('./GetProductById');
 const { GetIdInSQL } = require('./GetIdInSQL');
+const { GetOrderDetails } = require('./GetOrderDetails');
+const { GetOrderId } = require('./GetOrderId');
+const { GetOrderListByUser } = require('./GetOrderListByUser');
 const { GetUserByEmail } = require('./GetUserByEmail');
 const { GetUserByUid } = require('./GetUserByUid');
 const { SetItemQuantityInCart } = require('./SetItemQuantityInCart');
@@ -28,6 +31,9 @@ module.exports = {
     GetCartTotal,
     GetProductById,
     GetIdInSQL,
+    GetOrderDetails,
+    GetOrderId,
+    GetOrderListByUser,
     GetUserByEmail,
     GetUserByUid,
     SetItemQuantityInCart,

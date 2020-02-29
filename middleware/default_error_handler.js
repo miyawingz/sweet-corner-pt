@@ -6,6 +6,7 @@ module.exports = (err, req, res, next) => {
             message:err.message,
             status:err.status
         })
+        return;
     }
     
     if (err.error) {
@@ -13,6 +14,7 @@ module.exports = (err, req, res, next) => {
             message: err.error,
             status: 500
         })
+        return;
     }
 
     res.status(err.status || 500).send({

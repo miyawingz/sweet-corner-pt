@@ -11,12 +11,12 @@ const ApiError = require('../../lib/apiError');
 router.post('/', tokenHandler, async (req, res, next) => {
     const { email, firstName, lastName, password } = req.body;
     const { cartId } = res.locals;
-    const hashPW = await generate(password);
 
     try {
-        if (!emailValidate(email) || !passwordValidate(password)) {
-            return next(new ApiError(422, 'invalid email or password'));
+        if (!emailValidate(email) || !passwordValidate(password) || !firstName || !lastName) {
+            return next(new ApiError(422, 'invalid or incomplete user info or password'));
         }
+        const hashPW = await generate(password);
 
         const queryInfoEmail = queries.GetUserByEmail(email);
         const ResultEmail = await queryAsync(queryInfoEmail.text, queryInfoEmail.values)
@@ -27,7 +27,7 @@ router.post('/', tokenHandler, async (req, res, next) => {
         const queryInfo = queries.CreateNewUser(email, firstName, lastName, hashPW);
         const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
 
-        if (rowCount === 0) {
+        if (rowCount < 1) {
             return next(new ApiError(500, 'fail to add user'));
         }
 

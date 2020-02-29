@@ -1,6 +1,16 @@
 DROP VIEW IF EXISTS "cartTotalView";
 CREATE VIEW "cartTotalView" AS 
 SELECT "cartItems"."cartId", "carts"."userId",
+    (
+        SELECT SUM(c."quantity"*p."cost") AS "cost"
+        FROM "cartItems" AS c JOIN "products" AS p ON c."productId"=p."id" 
+        WHERE c."cartId"="cartItems"."cartId"
+    ),
+    (
+        SELECT SUM(c."quantity") AS "items"
+        FROM "cartItems" AS c JOIN "products" AS p ON c."productId"=p."id" 
+        WHERE c."cartId"="cartItems"."cartId"
+    ),
     (SELECT row_to_json(subQ) AS "total" 
         FROM (
             SELECT SUM(c."quantity"*p."cost") AS "cost", SUM(c."quantity") AS "items"
