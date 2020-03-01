@@ -1,4 +1,5 @@
 function GetProductById(id) {
+    //use the thumbnailView
     return {
         text:`select row_to_json(productsSubQ) as "product"
                 from ( 

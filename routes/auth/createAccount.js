@@ -33,6 +33,7 @@ router.post('/', tokenHandler, async (req, res, next) => {
 
         const uid = rows[0].pid;
         const token = tokenEncode({ uid, iat: Date.now(), exp: (Date.now() + 12096e5) });
+        //define the 14 days in process env instead
 
         if (cartId) {
             const queryInfo = queries.UpdateCartUserId(uid, cartId);

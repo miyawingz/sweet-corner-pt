@@ -1,4 +1,5 @@
 function GetOrderId(type, value) {
+    //switch order of type and value
     if (type == 'users') {
         return {
             text: `SELECT "orders"."pid", "orders"."id" 

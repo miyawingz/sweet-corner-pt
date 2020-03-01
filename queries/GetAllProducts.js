@@ -1,4 +1,6 @@
 function GetAllProducts() {
+                            // update to use thumbnaiLvIEW
+
     return {
         text: `select json_agg(productsSubQuery) as "products"
                 from (

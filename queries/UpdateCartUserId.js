@@ -1,4 +1,5 @@
 function UpdateCartUserId(uid, cartId) {
+    //updatedAt at now()
     return {
         text: `UPDATE "carts"
         SET "userId" = "users"."id"

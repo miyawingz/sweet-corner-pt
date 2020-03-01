@@ -9,50 +9,40 @@ async function sqlIdHandler(req, res, next) {
     res.locals.sqlInfo = {};
 
     try {
-        if (uid) {
-            const queryInfo = queries.GetIdInSQL('users', uid);
-            const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-            if (rowCount < 1) {
-                return next(new ApiError(500, 'invalid auth token, user does not exist'));
-            }
-            res.locals.sqlInfo.uidSQL = rows[0].id;
+        //     //set the cart token before this handler, including getting cartId from user
+        //     //so you wont really need the uid section of this
+        //     //adding another middleware to get user's cart and check is active cart,
+        //     //overall to just take care of cart
+        //     if (!cartId) {
+        //         const queryInfoCart = queries.GetCartIdByUser(rows[0].id, 2);
+        //         const ResultCart = await queryAsync(queryInfoCart.text, queryInfoCart.values);
+        //         if (ResultCart.rowCount > 0) {
+        //             res.locals.sqlInfo.cartIdSQL = ResultCart.rows[0].id;
+        //             res.locals.cartId = ResultCart.rows[0].cartId;
+        //         }
+        //     }
+        // }
 
-            if (!cartId) {
-                const queryInfoCart = queries.GetCartIdByUser(rows[0].id, 2);
-                const ResultCart = await queryAsync(queryInfoCart.text, queryInfoCart.values);
-                if (ResultCart.rowCount > 0) {
-                    res.locals.sqlInfo.cartIdSQL = ResultCart.rows[0].id;
-                    res.locals.cartId = ResultCart.rows[0].cartId;
-                }
-            }
-        }
+        const ids = [
+            { id: uid, table: 'users', idType: 'uid' },
+            { id: cartId, table: 'carts', idType: 'cartId' },
+            { id: productId, table: 'products', idType: 'productId' },
+            { id: itemId, table: 'cartItems', idType: 'itemId' }
+        ]
 
-        if (cartId) {
-            const queryInfo = queries.GetIdInSQL('carts', cartId);
-            const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-            if (rowCount < 1) {
-                return next(new ApiError(500, 'invalid cart token, active cart does not exist'));
-            }
-            res.locals.sqlInfo.cartIdSQL = rows[0].id;
-        }
+        for (let i = 0; i < ids.length; i++) {
+            let id = ids[i];
+            if (id.id) {
+                const queryInfo = queries.GetIdInSQL(id.id, id.table);
+                const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
 
-        if (productId) {
-            res.locals.productId = productId;
-            const queryInfo = queries.GetIdInSQL('products', productId);
-            const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-            if (rowCount < 1) {
-                return next(new ApiError(500, 'product does not exist'));
-            }
-            res.locals.sqlInfo.productIdSQL = rows[0].id;
-        }
+                if (rowCount < 1) {
+                    return next(new ApiError(500, `invalid id for ${id.table}`))
+                };
 
-        if (itemId) {
-            const queryInfo = queries.GetIdInSQL('cartItems', itemId);
-            const { rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-            if (rowCount < 1) {
-                return next(new ApiError(500, 'cart item does not exist'));
+                res.locals[`${id.idType}`] = id.id;
+                res.locals.sqlInfo[`${id.idType}SQL`] = rows[0].id;
             }
-            res.locals.itemId = itemId;
         }
 
         next();

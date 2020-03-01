@@ -7,7 +7,27 @@ const { sqlIdHandler } = require('../../middleware/sqlId_handler');
 const { emailValidate } = require('../../lib/userUtils');
 const ApiError = require('../../lib/apiError');
 
-router.post('/', tokenHandler, sqlIdHandler, async (req, res, next) => {
+//break the function into its own files
+router.route('/')
+.all(tokenHandler, sqlIdHandler,)
+.get(async (req, res, next) => {
+    const { uidSQL } = res.locals.sqlInfo;
+    try {
+        if (!uidSQL) {
+            return next(new ApiError(500, 'invalid user auth'));
+        }
+        const queryInfo = queries.GetOrderListByUser(uidSQL);
+        const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
+        if (rowCount < 1) {
+            return next(new ApiError(500, 'fail to obtian order list'))
+        }
+        res.send(rows[0])
+
+    } catch (err) {
+        next(err);
+    }
+})
+.post(async (req, res, next) => {
     const { uidSQL, cartIdSQL } = res.locals.sqlInfo;
     try {
         if (!uidSQL || !cartIdSQL) {
@@ -51,24 +71,6 @@ router.get('/:order_id', tokenHandler, sqlIdHandler, async (req, res, next) => {
         next(err);
     }
 
-})
-
-router.get('/', tokenHandler, sqlIdHandler, async (req, res, next) => {
-    const { uidSQL } = res.locals.sqlInfo;
-    try {
-        if (!uidSQL) {
-            return next(new ApiError(500, 'invalid user auth'));
-        }
-        const queryInfo = queries.GetOrderListByUser(uidSQL);
-        const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-        if (rowCount < 1) {
-            return next(new ApiError(500, 'fail to obtian order list'))
-        }
-        res.send(rows[0])
-
-    } catch (err) {
-        next(err);
-    }
 })
 
 router.post('/guest', tokenHandler, sqlIdHandler, async (req, res, next) => {
@@ -116,6 +118,7 @@ router.get('/guest/:order_id', async (req, res, next) => {
     }
 })
 
+//break into order util?
 async function GetOrderDetails(idType, id, orderId) {
     const queryInfoOrderId = queries.GetOrderId(idType, id);
     const ResultOrderId = await queryAsync(queryInfoOrderId.text, queryInfoOrderId.values);

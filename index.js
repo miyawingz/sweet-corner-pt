@@ -14,5 +14,5 @@ const app = routes(baseApp);
 app.use('/', defaultErrorHandler);
 
 app.listen(port, () => {
-    console.log('server listening on 9000')
+    console.log(`server listening on ${port}`);
 })

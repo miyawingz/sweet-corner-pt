@@ -8,6 +8,7 @@ const { tokenEncode, tokenDecode } = require('../../lib/jwtHandler');
 const { emailValidate } = require('../../lib/userUtils');
 const ApiError = require('../../lib/apiError');
 
+//should be in folder
 router.get('/', tokenHandler, async (req, res, next) => {
     const { uid, token } = res.locals;
 
@@ -52,6 +53,7 @@ router.post('/', tokenHandler, async (req, res, next) => {
         }
 
         if (cartId) {
+            //get the userID in the Get User By Email!
             const queryInfoUidSQL = queries.GetIdInSQL('users', pid);
             const { rows } = await queryAsync(queryInfoUidSQL.text, queryInfoUidSQL.values);
 
@@ -59,6 +61,7 @@ router.post('/', tokenHandler, async (req, res, next) => {
             const ResultCurrentCart = await queryAsync(queryInfoGetCurrentCart.text, queryInfoGetCurrentCart.values);
             if (ResultCurrentCart.rowCount > 0) {
                 for (let i = 0; i < ResultCurrentCart.rowCount; i++) {
+                    // update where cartId is ? , update all at once?
                     const queryInfoCartStatus = queries.UpdateCartStatus(ResultCurrentCart.rows[i].id, 5);
                     await queryAsync(queryInfoCartStatus.text, queryInfoCartStatus.values);
                 }
