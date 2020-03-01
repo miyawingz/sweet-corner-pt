@@ -17,6 +17,7 @@ router.get('/totals', tokenHandler, sqlIdHandler, async (req, res, next) => {
             const queryInfo = queries.GetCartTotal(sqlInfo.type, sqlInfo.value);
             const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
             if (rowCount > 0) {
+                //destruct into variables so it is easier to read
                 res.send({ ...rows[0] });
                 return;
             }
@@ -57,6 +58,7 @@ router.get('/', tokenHandler, sqlIdHandler, async (req, res, next) => {
     }
 })
 
+//combine these two delete endpoints? just check if the cart_id is null?
 router.delete('/:cart_id', tokenHandler, sqlIdHandler, async (req, res, next) => {
     const { uidSQL } = res.locals.sqlInfo;
     const cartId = req.params['cart_id'];

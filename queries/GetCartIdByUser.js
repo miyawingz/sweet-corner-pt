@@ -1,4 +1,5 @@
 function GetCartIdByUser(uid, statusId) {
+    // can default statusId to 2
     return {
         text: `SELECT "id", "pid" as "cartId" 
                 FROM "carts" 

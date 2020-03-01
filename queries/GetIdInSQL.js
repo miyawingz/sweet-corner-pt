@@ -1,4 +1,6 @@
-function GetIdInSQL(table, id) {
+function GetIdInSQL(id, table) {
+    //check status returned from query? avoid embedding logic in this query? 
+    //select statusId regardless and just set default to null?
     if (table == 'carts') {
         return {
             text: `SELECT "id" FROM "${table}" 

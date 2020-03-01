@@ -5,4 +5,7 @@ function UpdateCartStatus(cartId, statusId) {
     }
 }
 
+// ResultCurrentCart.rows.map(x => x.id)
+// where "id" in (${cartId}.join(","))
+
 module.exports.UpdateCartStatus = UpdateCartStatus

@@ -1,4 +1,5 @@
 function GetCartDetail(idType, id) {
+    //SWITH ORDER IDTYPE LAST
     return {
         text: `
                 SELECT cd."pid" as "cartId", cd."items", ct."total" 
