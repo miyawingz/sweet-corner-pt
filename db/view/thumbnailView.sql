@@ -1,8 +1,8 @@
 DROP VIEW IF EXISTS "thumbnailView";
 
 CREATE VIEW "thumbnailView" AS
-SELECT "productId"
-     , (SELECT row_to_json(subQ)
+SELECT "productId",
+       (SELECT row_to_json(subQ)
         FROM  (
            SELECT "altText", 'http://api.sc.lfzprototypes.com/images/thumbnails/'|| "file" as "url"
            FROM   "images"

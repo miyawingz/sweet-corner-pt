@@ -1,7 +1,7 @@
 drop function if exists "spCreateGuestOrder";
 
 create or replace function "spCreateGuestOrder" (userEmail TEXT, firstName TEXT, lastName TEXT, cartId INT)
-returns table (pid uuid)
+returns (pid uuid)
 language plpgsql
 AS $$
 DECLARE
@@ -17,8 +17,6 @@ BEGIN
     SELECT ct."items", ct."cost" INTO items, cost 
         FROM "cartTotalView" AS ct 
         WHERE ct."cartId"=cartId
-    -- items:=(SELECT ct."items" FROM "cartTotalView" AS ct WHERE ct."cartId"=cartId);
-    -- cost:=(SELECT ct."cost" FROM "cartTotalView" AS ct WHERE ct."cartId"=cartId);
     INSERT INTO "orders" 
         ("cartId", "guestId", "statusId","itemCount","total")
         VALUES (cartId, guestId, 2, items, cost);
