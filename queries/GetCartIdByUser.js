@@ -1,10 +1,10 @@
-function GetCartIdByUser(uid, statusId) {
+function GetCartIdByUser(uid, statusId = 2) {
     // can default statusId to 2
     return {
-        text: `SELECT "id", "pid" as "cartId" 
+        text: ` SELECT "id", "pid" as "cartId" 
                 FROM "carts" 
                 WHERE "userId"=$1 AND "statusId"<=$2
-                ORDER BY "statusId" desc`,
+                ORDER BY "statusId" desc `,
         values: [uid, statusId]
     }
 }

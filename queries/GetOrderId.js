@@ -1,8 +1,7 @@
-function GetOrderId(type, value) {
-    //switch order of type and value
+function GetOrderId(value, type) {
     if (type == 'users') {
         return {
-            text: `SELECT "orders"."pid", "orders"."id" 
+            text: ` SELECT "orders"."pid", "orders"."id" 
                     FROM "orders" JOIN "users"
                     ON "orders"."userId" = "users"."id"
                     WHERE "orders"."statusId"=2 AND "users"."id"=$1`,
@@ -12,7 +11,7 @@ function GetOrderId(type, value) {
 
     if (type == 'guests') {
         return {
-            text: `SELECT "orders"."pid", "orders"."id" 
+            text: ` SELECT "orders"."pid", "orders"."id" 
                     FROM "orders" JOIN "guests"
                     ON "orders"."guestId" = "guests"."id"
                     WHERE "orders"."statusId"=2 AND "guests"."email"=$1`,

@@ -1,37 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const queries = require('../../queries');
-const { queryAsync } = require('../../db');
-const { compare } = require('../../lib/hash');
-const { tokenHandler } = require('../../middleware/token_handler');
-const { tokenEncode, tokenDecode } = require('../../lib/jwtHandler');
-const { emailValidate } = require('../../lib/userUtils');
-const ApiError = require('../../lib/apiError');
+const queries = require('../../../queries');
+const { queryAsync } = require('../../../db');
+const { compare } = require('../../../lib/hash');
+const { tokenEncode, tokenDecode } = require('../../../lib/jwtHandler');
+const { emailValidate } = require('../../../lib/userUtils');
+const ApiError = require('../../../lib/apiError');
 
-//should be in folder
-router.get('/', tokenHandler, async (req, res, next) => {
-    const { uid, token } = res.locals;
-
-    try {
-        if (!uid || !token) {
-            return next(new ApiError(400, 'invalid user token'))
-        }
-
-        const queryInfo = queries.GetUserByUid(uid);
-        const { rows, rowCount } = await queryAsync(queryInfo.text, queryInfo.values);
-        if (rowCount === 0) {
-            return next(new ApiError(400, 'invalid user token'))
-        }
-
-        res.send({ user: rows[0] })
-
-    } catch (err) {
-        next(err)
-    }
-
-})
-
-router.post('/', tokenHandler, async (req, res, next) => {
+module.exports = async function signInPW(req, res, next) {
     const { cartId } = res.locals;
     const { email, password } = req.body;
 
@@ -84,6 +58,4 @@ router.post('/', tokenHandler, async (req, res, next) => {
         next(err);
     }
 
-})
-
-module.exports = router;
+}

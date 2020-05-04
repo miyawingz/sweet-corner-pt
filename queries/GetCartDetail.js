@@ -1,12 +1,9 @@
-function GetCartDetail(idType, id) {
-    //SWITH ORDER IDTYPE LAST
+function GetCartDetail(id, idType) {
     return {
-        text: `
-                SELECT cd."pid" as "cartId", cd."items", ct."total" 
+        text: ` SELECT cd."pid" as "cartId", cd."items", ct."total" 
                 FROM "cartDetailView" as cd JOIN "cartTotalView" as ct
                 USING ("cartId")
-                WHERE cd."${idType}"=$1    
-            `,
+                WHERE cd."${idType}"=$1 `,
         values: [id]
     }
 }

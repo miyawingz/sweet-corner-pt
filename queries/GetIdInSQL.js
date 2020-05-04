@@ -3,15 +3,17 @@ function GetIdInSQL(id, table) {
     //select statusId regardless and just set default to null?
     if (table == 'carts') {
         return {
-            text: `SELECT "id" FROM "${table}" 
-                   WHERE "pid"=$1 AND "statusId"<=$2 
-                   ORDER BY "statusId" DESC;`,
+            text: ` SELECT "id" FROM "${table}" 
+                    WHERE "pid"=$1 AND "statusId"<=$2 
+                    ORDER BY "statusId" DESC; `,
             values: [id, 2]
         }
     }
 
     return {
-        text: `SELECT "id" FROM "${table}" WHERE "pid"=$1`,
+        text: ` SELECT "id" 
+                FROM "${table}" 
+                WHERE "pid"=$1 `,
         values: [id]
     }
 }

@@ -21,7 +21,7 @@ async function sqlIdHandler(req, res, next) {
         //             res.locals.cartId = ResultCart.rows[0].cartId;
         //         }
         //     }
-        // }
+        // 
 
         const ids = [
             { id: uid, table: 'users', idType: 'uid' },

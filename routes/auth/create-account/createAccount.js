@@ -1,14 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const queries = require('../../queries');
-const { queryAsync } = require('../../db');
-const { generate } = require('../../lib/hash');
-const { emailValidate, passwordValidate } = require('../../lib/userUtils');
-const { tokenEncode } = require('../../lib/jwtHandler');
-const { tokenHandler } = require('../../middleware/token_handler');
-const ApiError = require('../../lib/apiError');
+const queries = require('../../../queries');
+const { queryAsync } = require('../../../db');
+const { generate } = require('../../../lib/hash');
+const { emailValidate, passwordValidate } = require('../../../lib/userUtils');
+const { tokenEncode } = require('../../../lib/jwtHandler');
+const ApiError = require('../../../lib/apiError');
 
-router.post('/', tokenHandler, async (req, res, next) => {
+module.exports = async function createAccount(req, res, next) {
     const { email, firstName, lastName, password } = req.body;
     const { cartId } = res.locals;
 
@@ -48,6 +45,4 @@ router.post('/', tokenHandler, async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-})
-
-module.exports = router;
+}
