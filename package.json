@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/miyawingz/sweet-corner-pt#readme",
   "dependencies": {
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jwt-simple": "^0.5.6",
